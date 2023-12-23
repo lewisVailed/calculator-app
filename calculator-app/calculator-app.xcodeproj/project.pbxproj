@@ -94,8 +94,8 @@
 		D73D352C2B2B73EC009ACB57 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D73D352F2B2B74D8009ACB57 /* ButtonCell.swift */,
 				D73D35312B2B76F0009ACB57 /* HeaderCell.swift */,
+				D73D352F2B2B74D8009ACB57 /* ButtonCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
