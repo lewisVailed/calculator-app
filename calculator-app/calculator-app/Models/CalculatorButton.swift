@@ -46,6 +46,17 @@ extension CalculatorButton {
         }
     }
     
+    var selectedColor : UIColor? {
+        switch self {
+        case .allClear, .plusMinus, .percentage, .number, .decimal, .equals:
+            return nil
+        case .divide, .multiply, .subtract, .add:
+            return .white
+        
+        }
+    }
+
+    
     var title : String {
         switch self {
         case .allClear:

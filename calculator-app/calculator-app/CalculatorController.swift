@@ -9,6 +9,10 @@ import UIKit
 
 class CalculatorController: UIViewController {
 
+    // MARK: - Variables
+    let viewModel: CalculatorConrollerVM
+    
+    
     // MARK: - UI Components
     private let collectionView: UICollectionView = {
         
@@ -34,8 +38,18 @@ class CalculatorController: UIViewController {
         // delegate and datasource protocols are defined
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
     }
 
+    init(_ viewModel: CalculatorConrollerVM = CalculatorConrollerVM()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UI Setup
     private func setupUI() {
         //Is where view objects are added
@@ -58,7 +72,7 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
     
     // MARK: - Buttons
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return self.viewModel.calculatorButtonCells.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
