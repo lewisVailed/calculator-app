@@ -35,6 +35,7 @@ enum CalculatorButton {
 
 extension CalculatorButton {
     
+    // button's default color
     var color : UIColor {
         switch self {
         case .allClear, .plusMinus, .percentage:
@@ -46,6 +47,7 @@ extension CalculatorButton {
         }
     }
     
+    // button's action color
     var selectedColor : UIColor? {
         switch self {
         case .allClear, .plusMinus, .percentage, .number, .decimal, .equals:
@@ -56,7 +58,7 @@ extension CalculatorButton {
         }
     }
 
-    
+    // button's names
     var title : String {
         switch self {
         case .allClear:

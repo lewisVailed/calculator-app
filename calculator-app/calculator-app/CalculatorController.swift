@@ -79,7 +79,8 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCell.identifier, for: indexPath) as? ButtonCell else {
             fatalError("Failed to dequeue ButtonCell in CC")
         }
-        cell.backgroundColor = .blue
+        let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
+        cell.configure(with: calculatorButton)
         return cell
     }
     
