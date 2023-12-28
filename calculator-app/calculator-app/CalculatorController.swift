@@ -59,10 +59,10 @@ class CalculatorController: UIViewController {
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
 }
@@ -85,7 +85,22 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width/5, height: view.frame.size.height/5)
+        let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
+        
+        switch calculatorButton {
+        // change size where number 0
+        case let .number(int) where int == 0 :
+            return CGSize(
+                width: (view.frame.self.width/5)*2 + ((view.frame.self.width/5)/3),
+                height: view.frame.size.width/5
+            )
+        default:
+            return CGSize(width: view.frame.size.width/5, height: view.frame.size.width/5)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return (self.view.frame.width/5)/3
     }
         
 }
