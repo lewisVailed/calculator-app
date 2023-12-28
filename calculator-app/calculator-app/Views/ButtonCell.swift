@@ -23,7 +23,7 @@ class ButtonCell: UICollectionViewCell {
         return label
     }()
     
-    // MARK: Configure
+    // MARK: - Configure
     public func configure(with calculatorButton: CalculatorButton) {
         self.calculatorButton = calculatorButton
         self.titleLabel.text = calculatorButton.title
@@ -39,6 +39,7 @@ class ButtonCell: UICollectionViewCell {
         self.setupUI()
     }
     
+    // MARK: - UI Setup
     private func setupUI() {
         self.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +68,14 @@ class ButtonCell: UICollectionViewCell {
             ])
 
         }
-        
+
     }
+    
+    // reset the constraint every single time 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.titleLabel.removeFromSuperview()
+    }
+    
     
 }

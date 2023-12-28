@@ -70,7 +70,35 @@ class CalculatorController: UIViewController {
 // MARK: - Extension
 extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    // MARK: - Buttons
+    // MARK: - Header Section
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderCell.identifier, for: indexPath) as? HeaderCell else {
+            fatalError("Failed to dequeue CalculatorHeaderCell in CalculatorController")
+        }
+        headerCell.configure(currentNumberText: self.viewModel.calculatorHeaderLabel)
+        return headerCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let totalCellHeight = view.frame.size.width
+        let totalVerticalCellSpacingSize = 10*4
+        
+        let window = view.window?.windowScene?.keyWindow
+        let topPadding = window?.safeAreaInsets.top ?? 0
+        let bottomPadding = window?.safeAreaInsets.bottom ?? 0
+        
+        let usableScreenHeight = (view.frame.size.height - topPadding) - bottomPadding
+        
+        let headerHeight = (usableScreenHeight - totalCellHeight) - CGFloat(totalVerticalCellSpacingSize)
+        
+        return CGSize(width: view.frame.size.width, height: headerHeight)
+    }
+    
+    // MARK: - Buttons Section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.calculatorButtonCells.count
     }
@@ -91,7 +119,7 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
         // change size where number 0
         case let .number(int) where int == 0 :
             return CGSize(
-                width: (view.frame.self.width/5)*2 + ((view.frame.self.width/5)/3),
+                width: (view.frame.size.width/5)*2 + ((view.frame.size.width/5)/3),
                 height: view.frame.size.width/5
             )
         default:
@@ -99,8 +127,17 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return (self.view.frame.width/5)/3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
+        print(calculatorButton.title)
     }
         
 }
