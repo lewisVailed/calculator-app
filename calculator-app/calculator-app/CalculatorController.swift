@@ -137,7 +137,7 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
-        print(calculatorButton.title)
+        self.viewModel.didSelectButton(with: calculatorButton)
     }
         
 }
