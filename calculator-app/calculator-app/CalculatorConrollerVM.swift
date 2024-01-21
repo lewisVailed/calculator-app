@@ -8,8 +8,8 @@
 import Foundation
 
 enum CurrentNumber {
-    case first
-    case second
+    case firstNumber
+    case secondNumber
 }
 
 class CalculatorConrollerVM {
@@ -28,19 +28,10 @@ class CalculatorConrollerVM {
     
     // MARK: - Variables
     private(set) lazy var calculatorHeaderLabel: String = (self.firstNumber ?? 0).description
-    private(set) var currentNumber: CurrentNumber = .first
+    private(set) var currentNumber: CurrentNumber = .firstNumber
     
-    private(set) var firstNumber: Int? = nil {
-        didSet {
-            self.calculatorHeaderLabel = self.firstNumber?.description ?? "0"
-        }
-    }
-    
-    private(set) var secondNumber: Int? = nil {
-        didSet {
-            self.calculatorHeaderLabel = self.secondNumber?.description ?? "0"
-        }
-    }
+    private(set) var firstNumber: Int? = nil {didSet{self.calculatorHeaderLabel = self.firstNumber?.description ?? "0"}}
+    private(set) var secondNumber: Int? = nil {didSet{self.calculatorHeaderLabel = self.secondNumber?.description ?? "0"}}
     
     private(set) var operation: CalculatorOperation? = nil
     
@@ -55,19 +46,19 @@ extension CalculatorConrollerVM {
     public func didSelectButton(with calculatorButton: CalculatorButton) {
         switch calculatorButton {
         case .allClear:
-            fatalError()
+            self.didSelectAllClear()
         case .plusMinus:
             fatalError()
         case .percentage:
             fatalError()
         case .divide:
-            fatalError()
+            self.didSelectOperation(with: .divide)
         case .multiply:
-            fatalError()
+            self.didSelectOperation(with: .multiply)
         case .subtract:
-            fatalError()
+            self.didSelectOperation(with: .subtract)
         case .add:
-            fatalError()
+            self.didSelectOperation(with: .add)
         case .equals:
             fatalError()
         case .number(let number):
@@ -79,12 +70,24 @@ extension CalculatorConrollerVM {
         self.updateViews?()
     }
     
+    private func didSelectAllClear() {
+        self.currentNumber = .firstNumber
+        self.firstNumber = nil
+        self.secondNumber = nil
+        self.prevNumber = nil
+        self.operation = nil
+        self.prevOperation = nil
+    }
+    
+  
 }
 
+
+// MARK: - Selecting Numbers
 extension CalculatorConrollerVM {
     
     private func didSelectNumber(with number: Int) {
-        if self.currentNumber == .first {
+        if self.currentNumber == .firstNumber {
             
             if let firstNumber = self.firstNumber {
                 var firstNumberString = firstNumber.description
@@ -109,6 +112,44 @@ extension CalculatorConrollerVM {
                 
             }
         }
-
     }
 }
+
+// MARK: - Equals and Aritmetic Operations
+extension CalculatorConrollerVM {
+    
+    private func didSelectOperation(with operation: CalculatorOperation) {
+        
+        if self.currentNumber == .firstNumber {
+            self.operation = operation
+            self.currentNumber = .secondNumber
+        } else if self.currentNumber == .secondNumber {
+            
+            if let prevOperation = self.operation, let firstNumber = self.firstNumber, let secondNumber = self.secondNumber {
+                
+                let result = self.getOperationResult(operation, firstNumber, secondNumber)
+                self.secondNumber = nil
+                self.firstNumber = result
+                self.currentNumber = .secondNumber
+                self.operation = operation
+            } else {
+                self.operation = operation
+            }
+        }
+        
+    }
+    
+    private func getOperationResult(_ operation: CalculatorOperation,_ firstNumber: Int,_ secondNumber: Int)->Int {
+        switch operation {
+        case .add:
+            return (firstNumber + secondNumber)
+        case .subtract:
+            return (firstNumber - secondNumber)
+        case .multiply:
+            return (firstNumber * secondNumber)
+        case .divide:
+            return (firstNumber / secondNumber)
+        }
+    }
+}
+
