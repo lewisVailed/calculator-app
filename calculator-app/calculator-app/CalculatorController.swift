@@ -39,6 +39,12 @@ class CalculatorController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
+        self.viewModel.updateViews = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
     }
 
     init(_ viewModel: CalculatorConrollerVM = CalculatorConrollerVM()) {
@@ -136,8 +142,10 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
-        self.viewModel.didSelectButton(with: calculatorButton)
+        let buttonCell = self.viewModel.calculatorButtonCells[indexPath.row]
+        self.viewModel.didSelectButton(with: buttonCell)
+        print(buttonCell.title)
+        
     }
         
 }

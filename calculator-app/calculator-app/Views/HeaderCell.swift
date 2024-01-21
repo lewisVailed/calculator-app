@@ -14,7 +14,7 @@ class HeaderCell: UICollectionReusableView {
     // MARK: - UI Components
     let headerLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = .white
         label.textAlignment = .right
         label.font  = .systemFont(ofSize: 72, weight: .regular)
         label.text = "label"
