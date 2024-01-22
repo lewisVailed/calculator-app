@@ -115,6 +115,13 @@ extension CalculatorController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         let calculatorButton = self.viewModel.calculatorButtonCells[indexPath.row]
         cell.configure(with: calculatorButton)
+        
+        if let operation = self.viewModel.operation, self.viewModel.secondNumber == nil {
+            if operation.title == calculatorButton.title {
+                cell.setOperationSelected()
+            }
+        }
+        
         return cell
     }
     

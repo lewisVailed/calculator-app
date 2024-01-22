@@ -48,9 +48,9 @@ extension CalculatorConrollerVM {
         case .allClear:
             self.didSelectAllClear()
         case .plusMinus:
-            fatalError()
+            self.didSelectPlusMinus()
         case .percentage:
-            fatalError()
+            self.didSelectPercentage()
         case .divide:
             self.didSelectOperation(with: .divide)
         case .multiply:
@@ -60,7 +60,7 @@ extension CalculatorConrollerVM {
         case .add:
             self.didSelectOperation(with: .add)
         case .equals:
-            fatalError()
+            self.didSelectEqualsButton()
         case .number(let number):
             self.didSelectNumber(with: number)
         case .decimal:
@@ -85,7 +85,7 @@ extension CalculatorConrollerVM {
 
 // MARK: - Selecting Numbers
 extension CalculatorConrollerVM {
-    
+        
     private func didSelectNumber(with number: Int) {
         if self.currentNumber == .firstNumber {
             
@@ -118,6 +118,24 @@ extension CalculatorConrollerVM {
 // MARK: - Equals and Aritmetic Operations
 extension CalculatorConrollerVM {
     
+    
+    private func didSelectEqualsButton() {
+        if let operation = self.operation, let firstNumber = self.firstNumber, let secondNumber = self.secondNumber {
+            
+            let result = getOperationResult(operation, firstNumber, secondNumber)
+            
+            self.secondNumber = nil
+            self.prevOperation = operation
+            self.operation = nil
+            self.firstNumber = result
+            self.currentNumber = .firstNumber
+        } else if let prevOperation = self.prevOperation, let firstNumber = self.firstNumber, let prevNumber = self.prevNumber {
+            
+            let result = getOperationResult(prevOperation, firstNumber, prevNumber)
+            self.firstNumber = result
+        }
+    }
+    
     private func didSelectOperation(with operation: CalculatorOperation) {
         
         if self.currentNumber == .firstNumber {
@@ -127,7 +145,7 @@ extension CalculatorConrollerVM {
             
             if let prevOperation = self.operation, let firstNumber = self.firstNumber, let secondNumber = self.secondNumber {
                 
-                let result = self.getOperationResult(operation, firstNumber, secondNumber)
+                let result = self.getOperationResult(prevOperation, firstNumber, secondNumber)
                 self.secondNumber = nil
                 self.firstNumber = result
                 self.currentNumber = .secondNumber
@@ -153,3 +171,31 @@ extension CalculatorConrollerVM {
     }
 }
 
+extension CalculatorConrollerVM {
+    
+    private func didSelectPlusMinus() {
+        if self.currentNumber == .firstNumber, var number = self.firstNumber {
+            number.negate()
+            self.firstNumber = number
+            self.prevNumber = number
+        } else if self.currentNumber == .secondNumber, var number = self.secondNumber {
+            number.negate()
+            self.secondNumber = number
+            self.prevNumber = number
+        }
+    }
+    
+    private func didSelectPercentage() {
+        if self.currentNumber == .firstNumber, var number = self.firstNumber {
+            number /= 100
+            self.firstNumber = number
+            self.prevNumber = number
+            
+        } else if self.currentNumber == .secondNumber, var number = self.secondNumber {
+            number /= 100
+            self.secondNumber = number
+            self.prevNumber = number
+            
+        }
+    }
+}
