@@ -35,6 +35,9 @@ class CalculatorConrollerVM {
     
     private(set) var operation: CalculatorOperation? = nil
     
+    private(set) var firstNumberIsDecimal: Bool = false
+    private(set) var secondNumberIsDecimal: Bool = false
+    
     // MARK: - Memory Variables
     private(set) var prevNumber: Int? = nil
     private(set) var prevOperation: CalculatorOperation? = nil
@@ -198,4 +201,6 @@ extension CalculatorConrollerVM {
             
         }
     }
+    
+
 }
