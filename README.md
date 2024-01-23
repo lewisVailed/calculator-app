@@ -8,4 +8,4 @@ Developed with MVVM architecture and written in full programmatic
 
 ## Screenshots
 
-<img src="https://github.com/lewisVailed/calculator-app/assets/101148589/b7fa1f1f-da3a-47da-9bdd-77be9515055d" width="100" height="100">
+<img src="https://github.com/lewisVailed/calculator-app/assets/101148589/b7fa1f1f-da3a-47da-9bdd-77be9515055d" width="300" >
