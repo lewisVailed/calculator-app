@@ -8,4 +8,5 @@ Developed with MVVM architecture and written in full programmatic
 
 ## Screenshots
 
-![](/var/folders/rs/jzblywzn119b_19hqhzyphx80000gn/T/simulator_screenshot_88A43DC9-7FD8-4C68-945E-41C8EAEBAF3C.png | width=100)
+
+![Simulator Screenshot - iPhone SE (3rd generation) - 2024-01-23 at 12 17 21](https://github.com/lewisVailed/calculator-app/assets/101148589/b7fa1f1f-da3a-47da-9bdd-77be9515055d  | width=100)
