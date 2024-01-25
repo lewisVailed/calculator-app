@@ -4,7 +4,7 @@ Developed with MVVM architecture and written in full programmatic
 ## Features
 - [x] UI Design
 - [x] Arithmetic Operations
-- [ ] Decimal Numbers
+- [x] Decimal Numbers
 
 ## Screenshots
 
